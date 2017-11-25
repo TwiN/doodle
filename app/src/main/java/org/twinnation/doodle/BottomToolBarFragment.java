@@ -26,7 +26,7 @@ public class BottomToolBarFragment extends Fragment {
         ImageButton clearCanvasBtn = (ImageButton)view.findViewById(R.id.clearCanvas);
         ImageButton saveCanvasBtn = (ImageButton)view.findViewById(R.id.saveCanvas);
         ImageButton undoBtn = (ImageButton)view.findViewById(R.id.undo);
-        final ImageButton eraserBtn = (ImageButton)view.findViewById(R.id.eraser);
+        ImageButton eraserBtn = (ImageButton)view.findViewById(R.id.eraser);
 
 
 
@@ -48,6 +48,13 @@ public class BottomToolBarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 canvasView.toggleEraserMode();
+            }
+        });
+
+        saveCanvasBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                canvasView.saveDoodle();
             }
         });
 

@@ -1,21 +1,23 @@
 package org.twinnation.doodle;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import org.twinnation.doodle.util.FileUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +103,32 @@ public class CanvasView extends View {
         invalidate();
     }
 
+
+    public void saveDoodle() {
+        setDrawingCacheEnabled(true);
+        setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        Bitmap bitmap = getDrawingCache();
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(path + "/" + FileUtils.generateFilename());
+        FileOutputStream ostream;
+        try {
+            file.createNewFile();
+            ostream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.flush();
+            ostream.close();
+            Toast.makeText(getContext(), "Image saved", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+
     public void undo() {
         if (paths.size() > 0) {
             paths.remove(paths.size()-1);
@@ -109,6 +137,7 @@ public class CanvasView extends View {
             Toast.makeText(getContext(), "There is nothing to undo", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public String getMode() {
         return mode;
