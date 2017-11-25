@@ -6,42 +6,57 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by chris on 2017-11-17.
- */
 
 public class CanvasView extends View {
 
     private Paint brush;
     private Paint background;
     private Path path = new Path();
+    private Canvas canvas;
+
+    private List<Path> paths;
+    private List<Paint> paints;
+
+    private String mode;
+    private boolean isErasing = false;
+
+    private int currentColor = Color.BLACK;
+    private int currentSize = 5;
 
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         background = new Paint();
-        brush = new Paint();
         background.setColor(Color.WHITE);
-        brush.setColor(Color.BLACK);
-        brush.setStyle(Paint.Style.STROKE);
-        brush.setStrokeWidth(5);
+        initBrush();
+        mode = "normal";
+        paths = new ArrayList<>();
+        paints = new ArrayList<>();
     }
+
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPaint(background);
+        for (int i = 0; i < paths.size(); i++) {
+            canvas.drawPath(paths.get(i), paints.get(i));
+        }
         canvas.drawPath(path, brush);
+        this.canvas = canvas;
     }
 
 
@@ -59,11 +74,69 @@ public class CanvasView extends View {
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x, y);
                 break;
+            case MotionEvent.ACTION_UP:
+                if (mode.equals("link")) {
+                    path.close();
+                }
+                paths.add(path);
+                paints.add(brush);
+                initBrush();
+                path = new Path();
+                break;
             default:
                 return false;
         }
         invalidate();
         return true;
+    }
 
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+
+    public void clearCanvas() {
+        paths.clear();
+        invalidate();
+    }
+
+    public void undo() {
+        if (paths.size() > 0) {
+            paths.remove(paths.size()-1);
+            invalidate();
+        } else {
+            Toast.makeText(getContext(), "There is nothing to undo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+
+    public String cycleNextMode() {
+        mode = mode.equals("link")?"normal":"link";
+        return mode;
+    }
+
+
+    public void toggleEraserMode() {
+        isErasing = !isErasing;
+        initBrush();
+    }
+
+
+    public void initBrush() {
+        brush = new Paint();
+        if (isErasing) {
+            brush.setColor(Color.WHITE);
+            brush.setStyle(Paint.Style.STROKE);
+            brush.setStrokeWidth(50);
+        } else {
+            brush.setColor(currentColor);
+            brush.setStyle(Paint.Style.STROKE);
+            brush.setStrokeWidth(currentSize);
+        }
     }
 }
