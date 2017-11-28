@@ -6,4 +6,5 @@
     <string name="error">Error</string>
     <string name="change_file_name">Change file name</string>
     <string name="file_name">File name</string>
+    <string name="link">link</string>
 </resources>

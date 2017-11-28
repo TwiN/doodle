@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/color_black"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:elevation="0dp"
+        app:srcCompat="@android:color/black"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/color_red"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:layout_marginLeft="8dp"
+        android:background="#FF0000"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/color_black"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/color_blue"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:layout_marginLeft="8dp"
+        android:background="#0000FF"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/color_green"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/color_green"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:layout_marginLeft="8dp"
+        android:background="#00FF00"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/color_red"
+        tools:layout_editor_absoluteY="16dp" />
+</android.support.constraint.ConstraintLayout>

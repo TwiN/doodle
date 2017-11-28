@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class CanvasView extends View {
 
@@ -145,7 +145,7 @@ public class CanvasView extends View {
 
 
     public String cycleNextMode() {
-        mode = mode.equals("link")?"normal":"link";
+        mode = mode.equals(R.string.link)?"normal":R.string.link+"";
         return mode;
     }
 
@@ -168,4 +168,5 @@ public class CanvasView extends View {
             brush.setStrokeWidth(currentSize);
         }
     }
+
 }
