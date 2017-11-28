@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Doodle</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nothing_to_undo">There is nothing to undo</string>
+    <string name="mode_set">Mode set: </string>
+    <string name="image_saved">Image saved</string>
+    <string name="error">Error</string>
+    <string name="change_file_name">Change file name</string>
+    <string name="file_name">File name</string>
 </resources>

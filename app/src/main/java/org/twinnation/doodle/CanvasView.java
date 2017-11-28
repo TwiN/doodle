@@ -121,9 +121,9 @@ public class CanvasView extends View {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
             ostream.flush();
             ostream.close();
-            Toast.makeText(getContext(), "Image saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.image_saved, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.error+e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -134,7 +134,7 @@ public class CanvasView extends View {
             paths.remove(paths.size()-1);
             invalidate();
         } else {
-            Toast.makeText(getContext(), "There is nothing to undo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.nothing_to_undo, Toast.LENGTH_SHORT).show();
         }
     }
 

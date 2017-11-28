@@ -8,5 +8,8 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="Modes"
         app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/setFileName"
+        android:title="@string/change_file_name" />
 
 </menu>

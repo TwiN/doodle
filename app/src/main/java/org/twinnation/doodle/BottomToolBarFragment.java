@@ -28,8 +28,6 @@ public class BottomToolBarFragment extends Fragment {
         ImageButton undoBtn = (ImageButton)view.findViewById(R.id.undo);
         ImageButton eraserBtn = (ImageButton)view.findViewById(R.id.eraser);
 
-
-
         clearCanvasBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

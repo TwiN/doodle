@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker {
 
     private CanvasView canvasView;
     private BottomToolBarFragment bottomToolBarFragment;
@@ -45,10 +45,22 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.mode:
-                Toast.makeText(this, "Mode set: "+canvasView.cycleNextMode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.mode_set + canvasView.cycleNextMode(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.setFileName:
+                FileNamePickerDialog fileNamePickerDialog = new FileNamePickerDialog();
+                fileNamePickerDialog.show(getSupportFragmentManager(), "bla bla bla bla");
+                fileNamePickerDialog.attach(MainActivity.this);
                 break;
 
         }
         return true;
+    }
+
+
+    @Override
+    public void onFileNamePicked(String fileName) {
+        // TODO: change file name
+        Toast.makeText(this, "Set file name to "+ fileName, Toast.LENGTH_LONG).show();
     }
 }
