@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker {
+public class MainActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker, ColorPickerDialog.IColorPicker {
 
     private CanvasView canvasView;
     private BottomToolBarFragment bottomToolBarFragment;
@@ -49,8 +49,13 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
                 break;
             case R.id.setFileName:
                 FileNamePickerDialog fileNamePickerDialog = new FileNamePickerDialog();
-                fileNamePickerDialog.show(getSupportFragmentManager(), "bla bla bla bla");
+                fileNamePickerDialog.show(getSupportFragmentManager(), "fileNamePickerDialog");
                 fileNamePickerDialog.attach(MainActivity.this);
+                break;
+            case R.id.setColor:
+                ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
+                colorPickerDialog.show(getSupportFragmentManager(), "colorPickerDialog");
+                colorPickerDialog.attach(MainActivity.this);
                 break;
 
         }
@@ -62,5 +67,10 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
     public void onFileNamePicked(String fileName) {
         // TODO: change file name
         Toast.makeText(this, "Set file name to "+ fileName, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onColorPicked(int color) {
+        canvasView.setCurrentColor(color);
     }
 }

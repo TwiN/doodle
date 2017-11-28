@@ -7,4 +7,6 @@
     <string name="change_file_name">Change file name</string>
     <string name="file_name">File name</string>
     <string name="link">link</string>
+    <string name="pick_color">Pick a color</string>
+    <string name="cancel">Cancel</string>
 </resources>

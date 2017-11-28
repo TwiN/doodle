@@ -11,5 +11,8 @@
     <item
         android:id="@+id/setFileName"
         android:title="@string/change_file_name" />
+    <item
+        android:id="@+id/setColor"
+        android:title="@string/pick_color" />
 
 </menu>

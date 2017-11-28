@@ -26,6 +26,16 @@
         tools:layout_editor_absoluteY="16dp" />
 
     <ImageView
+        android:id="@+id/color_green"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:layout_marginLeft="8dp"
+        android:background="#00FF00"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/color_red"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
         android:id="@+id/color_blue"
         android:layout_width="75px"
         android:layout_height="75px"
@@ -35,13 +45,4 @@
         app:layout_constraintLeft_toRightOf="@+id/color_green"
         tools:layout_editor_absoluteY="16dp" />
 
-    <ImageView
-        android:id="@+id/color_green"
-        android:layout_width="75px"
-        android:layout_height="75px"
-        android:layout_marginLeft="8dp"
-        android:background="#00FF00"
-        android:elevation="0dp"
-        app:layout_constraintLeft_toRightOf="@+id/color_red"
-        tools:layout_editor_absoluteY="16dp" />
 </android.support.constraint.ConstraintLayout>

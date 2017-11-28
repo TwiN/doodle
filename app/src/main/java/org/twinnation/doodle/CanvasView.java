@@ -77,7 +77,7 @@ public class CanvasView extends View {
                 path.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
-                if (mode.equals("link")) {
+                if (mode.equals(R.string.link)) {
                     path.close();
                 }
                 paths.add(path);
@@ -167,6 +167,17 @@ public class CanvasView extends View {
             brush.setStyle(Paint.Style.STROKE);
             brush.setStrokeWidth(currentSize);
         }
+    }
+
+
+    public int getCurrentColor() {
+        return currentColor;
+    }
+
+
+    public void setCurrentColor(int currentColor) {
+        this.currentColor = currentColor;
+        initBrush();
     }
 
 }
