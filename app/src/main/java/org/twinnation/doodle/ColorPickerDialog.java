@@ -41,13 +41,21 @@ public class ColorPickerDialog extends DialogFragment {
                 client.onColorPicked(Color.BLUE);
             }
         });
-
         view.findViewById(R.id.color_green).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 client.onColorPicked(Color.GREEN);
             }
         });
-
+        view.findViewById(R.id.color_red).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                client.onColorPicked(Color.RED);
+            }
+        });
+        view.findViewById(R.id.color_black).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                client.onColorPicked(Color.BLACK);
+            }
+        });
 
         return dialog;
     }
