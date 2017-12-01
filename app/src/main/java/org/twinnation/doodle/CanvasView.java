@@ -23,6 +23,10 @@ import java.util.List;
 
 public class CanvasView extends View {
 
+    public static final int MAX_BRUSH_SIZE = 50;
+    public static final int MIN_BRUSH_SIZE = 5;
+
+
     private Paint brush;
     private Paint background;
     private Path path = new Path();
@@ -36,6 +40,7 @@ public class CanvasView extends View {
 
     private int currentColor = Color.BLACK;
     private int currentSize = 5;
+    private String customFileName;
 
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -113,7 +118,7 @@ public class CanvasView extends View {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File file = new File(path + "/" + FileUtils.generateFilename());
+        File file = new File(path + "/" + (customFileName == null ? FileUtils.generateFilename() : customFileName));
         FileOutputStream ostream;
         try {
             file.createNewFile();
@@ -123,7 +128,7 @@ public class CanvasView extends View {
             ostream.close();
             Toast.makeText(getContext(), R.string.image_saved, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(getContext(), R.string.error+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.error + e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -183,7 +188,7 @@ public class CanvasView extends View {
 
 
     public void decrementBrushSize() {
-        if (currentSize > 5) {
+        if (currentSize > MIN_BRUSH_SIZE) {
             currentSize -= 5;
             initBrush();
         } else {
@@ -193,7 +198,7 @@ public class CanvasView extends View {
 
 
     public void incrementBrushSize() {
-        if (currentSize < 50) {
+        if (currentSize < MAX_BRUSH_SIZE) {
             currentSize += 5;
             initBrush();
         } else {
@@ -210,6 +215,16 @@ public class CanvasView extends View {
 
     public int getCurrentSize() {
         return currentSize;
+    }
+
+
+    public String getCustomFileName() {
+        return customFileName;
+    }
+
+
+    public void setCustomFileName(String customFileName) {
+        this.customFileName = customFileName;
     }
 
 }

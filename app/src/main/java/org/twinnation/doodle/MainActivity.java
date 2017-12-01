@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
 
     @Override
     public void onFileNamePicked(String fileName) {
-        // TODO: change file name
+        canvasView.setCustomFileName(fileName);
         Toast.makeText(this, "Set file name to "+ fileName, Toast.LENGTH_LONG).show();
     }
 
@@ -79,4 +79,5 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
     public void onColorPicked(int color) {
         canvasView.setCurrentColor(color);
     }
+
 }
