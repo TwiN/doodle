@@ -1,16 +1,12 @@
 package org.twinnation.doodle;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-
-import org.twinnation.doodle.util.FileUtils;
 
 /**
  * Created by chris on 2017-11-28.
@@ -18,6 +14,7 @@ import org.twinnation.doodle.util.FileUtils;
 public class ColorPickerDialog extends DialogFragment {
 
     private IColorPicker client;
+    private Dialog dialog;
 
 
     public interface IColorPicker {
@@ -30,34 +27,29 @@ public class ColorPickerDialog extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.color_picker, null);
 
-        Dialog dialog = new AlertDialog.Builder(getActivity())
+        dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pick_color)
                 .setNegativeButton(R.string.cancel, null)
                 .setView(view)
                 .create();
 
-        view.findViewById(R.id.color_blue).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                client.onColorPicked(Color.BLUE);
-            }
-        });
-        view.findViewById(R.id.color_green).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                client.onColorPicked(Color.GREEN);
-            }
-        });
-        view.findViewById(R.id.color_red).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                client.onColorPicked(Color.RED);
-            }
-        });
-        view.findViewById(R.id.color_black).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                client.onColorPicked(Color.BLACK);
-            }
-        });
+        createClickListenerForColor(view, R.id.color_blue, Color.BLUE);
+        createClickListenerForColor(view, R.id.color_green, Color.GREEN);
+        createClickListenerForColor(view, R.id.color_red, Color.RED);
+        createClickListenerForColor(view, R.id.color_black, Color.BLACK);
+        createClickListenerForColor(view, R.id.color_purple, 0xFFAA66CC);
 
         return dialog;
+    }
+
+
+    private void createClickListenerForColor(View view, int btnId, final int color) {
+        view.findViewById(btnId).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                client.onColorPicked(color);
+                dialog.dismiss();
+            }
+        });
     }
 
 

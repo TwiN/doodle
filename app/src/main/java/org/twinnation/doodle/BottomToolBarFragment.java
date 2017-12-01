@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 /**
@@ -14,8 +15,8 @@ import android.widget.ImageButton;
 
 public class BottomToolBarFragment extends Fragment {
 
-
     private CanvasView canvasView;
+
 
     @Nullable
     @Override
@@ -26,33 +27,44 @@ public class BottomToolBarFragment extends Fragment {
         ImageButton clearCanvasBtn = (ImageButton)view.findViewById(R.id.clearCanvas);
         ImageButton saveCanvasBtn = (ImageButton)view.findViewById(R.id.saveCanvas);
         ImageButton undoBtn = (ImageButton)view.findViewById(R.id.undo);
-        ImageButton eraserBtn = (ImageButton)view.findViewById(R.id.eraser);
+        final ImageButton eraserBtn = (ImageButton)view.findViewById(R.id.eraser);
+        Button plusSize = (Button)view.findViewById(R.id.plusSize);
+        Button minusSize = (Button)view.findViewById(R.id.minusSize);
 
         clearCanvasBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            @Override public void onClick(View view) {
                 canvasView.clearCanvas();
             }
         });
 
         undoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            @Override public void onClick(View view) {
                 canvasView.undo();
             }
         });
 
         eraserBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            @Override public void onClick(View view) {
                 canvasView.toggleEraserMode();
+                eraserBtn.setImageResource(canvasView.getIsErasing() ? R.mipmap.eraser_green : R.mipmap.eraser);
             }
         });
 
         saveCanvasBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            @Override public void onClick(View view) {
                 canvasView.saveDoodle();
+            }
+        });
+
+        plusSize.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                canvasView.incrementBrushSize();
+            }
+        });
+
+        minusSize.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                canvasView.decrementBrushSize();
             }
         });
 

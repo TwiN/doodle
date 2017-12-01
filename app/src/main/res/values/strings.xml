@@ -9,4 +9,6 @@
     <string name="link">link</string>
     <string name="pick_color">Pick a color</string>
     <string name="cancel">Cancel</string>
+    <string name="maximum_brush_size">Maximum brush size reached</string>
+    <string name="minimum_brush_size">Minimum brush size reached</string>
 </resources>

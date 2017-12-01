@@ -49,7 +49,6 @@ public class CanvasView extends View {
     }
 
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -100,6 +99,7 @@ public class CanvasView extends View {
 
     public void clearCanvas() {
         paths.clear();
+        paints.clear();
         invalidate();
     }
 
@@ -132,6 +132,7 @@ public class CanvasView extends View {
     public void undo() {
         if (paths.size() > 0) {
             paths.remove(paths.size()-1);
+            paints.remove(paints.size()-1);
             invalidate();
         } else {
             Toast.makeText(getContext(), R.string.nothing_to_undo, Toast.LENGTH_SHORT).show();
@@ -145,7 +146,7 @@ public class CanvasView extends View {
 
 
     public String cycleNextMode() {
-        mode = mode.equals(R.string.link)?"normal":R.string.link+"";
+        mode = mode.equals(R.string.link+"")?"normal":R.string.link+"";
         return mode;
     }
 
@@ -161,7 +162,7 @@ public class CanvasView extends View {
         if (isErasing) {
             brush.setColor(Color.WHITE);
             brush.setStyle(Paint.Style.STROKE);
-            brush.setStrokeWidth(50);
+            brush.setStrokeWidth(currentSize);
         } else {
             brush.setColor(currentColor);
             brush.setStyle(Paint.Style.STROKE);
@@ -178,6 +179,37 @@ public class CanvasView extends View {
     public void setCurrentColor(int currentColor) {
         this.currentColor = currentColor;
         initBrush();
+    }
+
+
+    public void decrementBrushSize() {
+        if (currentSize > 5) {
+            currentSize -= 5;
+            initBrush();
+        } else {
+            Toast.makeText(getContext(), R.string.minimum_brush_size, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void incrementBrushSize() {
+        if (currentSize < 50) {
+            currentSize += 5;
+            initBrush();
+        } else {
+            Toast.makeText(getContext(), R.string.maximum_brush_size, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    public boolean getIsErasing() {
+        return isErasing;
+    }
+
+
+    public int getCurrentSize() {
+        return currentSize;
     }
 
 }

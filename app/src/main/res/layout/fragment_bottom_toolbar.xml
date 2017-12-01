@@ -9,26 +9,28 @@
 
     <ImageButton
         android:id="@+id/clearCanvas"
+        style="?attr/buttonStyle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        tools:layout_editor_absoluteX="8dp" />
 
     <ImageButton
         android:id="@+id/saveCanvas"
+        style="?attr/buttonStyle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        app:layout_constraintLeft_toRightOf="@+id/clearCanvas"
         android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/clearCanvas"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        app:srcCompat="@android:drawable/ic_menu_save" />
 
     <ImageButton
         android:id="@+id/undo"
+        style="?attr/buttonStyle"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="0dp"
@@ -40,12 +42,39 @@
 
     <ImageButton
         android:id="@+id/eraser"
+        style="?attr/buttonStyle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toRightOf="@+id/undo"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/eraser" />
+
+    <Button
+        android:id="@+id/plusSize"
+        style="?attr/buttonStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:text="+"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toRightOf="@+id/minusSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/minusSize"
+        style="?attr/buttonStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="-"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/eraser"
+        android:layout_marginLeft="0dp" />
 
 </android.support.constraint.ConstraintLayout>

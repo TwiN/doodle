@@ -8,17 +8,18 @@
 
     <ImageView
         android:id="@+id/color_black"
-        android:layout_width="75px"
-        android:layout_height="75px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:elevation="0dp"
         app:srcCompat="@android:color/black"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
         android:id="@+id/color_red"
-        android:layout_width="75px"
-        android:layout_height="75px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="8dp"
         android:background="#FF0000"
         android:elevation="0dp"
@@ -27,8 +28,8 @@
 
     <ImageView
         android:id="@+id/color_green"
-        android:layout_width="75px"
-        android:layout_height="75px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="8dp"
         android:background="#00FF00"
         android:elevation="0dp"
@@ -37,12 +38,22 @@
 
     <ImageView
         android:id="@+id/color_blue"
-        android:layout_width="75px"
-        android:layout_height="75px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="8dp"
         android:background="#0000FF"
         android:elevation="0dp"
         app:layout_constraintLeft_toRightOf="@+id/color_green"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageView
+        android:id="@+id/color_purple"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:background="@android:color/holo_purple"
+        android:elevation="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/color_blue"
         tools:layout_editor_absoluteY="16dp" />
 
 </android.support.constraint.ConstraintLayout>

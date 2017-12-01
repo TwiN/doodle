@@ -9,4 +9,6 @@
     <string name="link">lien</string>
     <string name="pick_color">Choisi une couleur</string>
     <string name="cancel">Annuler</string>
+    <string name="maximum_brush_size">Grosseur maximale atteinte</string>
+    <string name="minimum_brush_size">Grosseur minimale atteinte</string>
 </resources>
