@@ -6,9 +6,9 @@
     <string name="error">Error</string>
     <string name="change_file_name">Change file name</string>
     <string name="file_name">File name</string>
-    <string name="link">link</string>
     <string name="pick_color">Pick a color</string>
     <string name="cancel">Cancel</string>
     <string name="maximum_brush_size">Maximum brush size reached</string>
     <string name="minimum_brush_size">Minimum brush size reached</string>
+    <string name="set_file_name">Set file name to</string>
 </resources>

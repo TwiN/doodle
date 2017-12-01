@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.mode:
-                Toast.makeText(this, R.string.mode_set + canvasView.cycleNextMode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getApplicationContext().getString(R.string.mode_set) + ": "
+                        + canvasView.cycleNextMode(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.setFileName:
                 FileNamePickerDialog fileNamePickerDialog = new FileNamePickerDialog();
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
                 colorPickerDialog.show(getSupportFragmentManager(), "colorPickerDialog");
                 colorPickerDialog.attach(MainActivity.this);
                 break;
-
         }
         return true;
     }
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
     @Override
     public void onFileNamePicked(String fileName) {
         canvasView.setCustomFileName(fileName);
-        Toast.makeText(this, "Set file name to "+ fileName, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getApplicationContext().getString(R.string.set_file_name) + ": "
+                + fileName, Toast.LENGTH_LONG).show();
     }
 
 

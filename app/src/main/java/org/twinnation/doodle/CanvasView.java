@@ -81,7 +81,7 @@ public class CanvasView extends View {
                 path.lineTo(x, y);
                 break;
             case MotionEvent.ACTION_UP:
-                if (mode.equals(R.string.link)) {
+                if (mode.equals("arc")) {
                     path.close();
                 }
                 paths.add(path);
@@ -151,7 +151,7 @@ public class CanvasView extends View {
 
 
     public String cycleNextMode() {
-        mode = mode.equals(R.string.link+"")?"normal":R.string.link+"";
+        mode = mode.equals("arc") ? "normal" : "arc";
         return mode;
     }
 
