@@ -6,7 +6,6 @@ import java.util.Date;
 /**
  * Created by chris on 2017-11-24.
  */
-
 public class FileUtils {
 
     private FileUtils() {}

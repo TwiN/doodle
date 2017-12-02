@@ -1,4 +1,4 @@
-package org.twinnation.doodle;
+package org.twinnation.doodle.activity;
 
 import android.Manifest;
 import android.support.v4.app.ActivityCompat;
@@ -8,8 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.twinnation.doodle.R;
+import org.twinnation.doodle.fragment.BottomToolBarFragment;
+import org.twinnation.doodle.fragment.ColorPickerDialog;
+import org.twinnation.doodle.fragment.FileNamePickerDialog;
+import org.twinnation.doodle.view.CanvasView;
 
-public class MainActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker, ColorPickerDialog.IColorPicker {
+
+public class DrawActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker, ColorPickerDialog.IColorPicker {
 
     private CanvasView canvasView;
     private BottomToolBarFragment bottomToolBarFragment;
@@ -19,9 +25,7 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         requestNeededPermissions();
-
         canvasView = (CanvasView)findViewById(R.id.canvas);
         bottomToolBarFragment = (BottomToolBarFragment)getFragmentManager().findFragmentById(R.id.bottomBar);
         bottomToolBarFragment.setCanvasView(canvasView);
@@ -29,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
 
 
     private void requestNeededPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 53523);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 53523);
     }
 
 
@@ -51,20 +56,15 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
             case R.id.setFileName:
                 FileNamePickerDialog fileNamePickerDialog = new FileNamePickerDialog();
                 fileNamePickerDialog.show(getSupportFragmentManager(), "fileNamePickerDialog");
-                fileNamePickerDialog.attach(MainActivity.this);
+                fileNamePickerDialog.attach(DrawActivity.this);
                 break;
             case R.id.setColor:
                 ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
                 colorPickerDialog.show(getSupportFragmentManager(), "colorPickerDialog");
-                colorPickerDialog.attach(MainActivity.this);
+                colorPickerDialog.attach(DrawActivity.this);
                 break;
         }
         return true;
-    }
-
-
-    public CanvasView getCanvasView() {
-        return canvasView;
     }
 
 
@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements FileNamePickerDia
     @Override
     public void onColorPicked(int color) {
         canvasView.setCurrentColor(color);
+    }
+
+
+    public CanvasView getCanvasView() {
+        return canvasView;
     }
 
 }

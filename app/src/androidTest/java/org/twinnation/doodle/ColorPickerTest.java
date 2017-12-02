@@ -10,6 +10,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.twinnation.doodle.view.CanvasView;
+import org.twinnation.doodle.activity.DrawActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
@@ -27,7 +29,7 @@ import static org.hamcrest.Matchers.is;
 public class ColorPickerTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<DrawActivity> mActivityTestRule = new ActivityTestRule<>(DrawActivity.class);
 
 
     @Test

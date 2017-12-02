@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.twinnation.doodle.MainActivity">
+    tools:context="org.twinnation.doodle.activity.DrawActivity">
 
     <view
         android:id="@+id/canvas"
-        class="org.twinnation.doodle.CanvasView"
+        class="org.twinnation.doodle.view.CanvasView"
         id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/bottomBar"
-        android:name="org.twinnation.doodle.BottomToolBarFragment"
+        android:name="org.twinnation.doodle.fragment.BottomToolBarFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"

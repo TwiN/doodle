@@ -1,4 +1,4 @@
-package org.twinnation.doodle;
+package org.twinnation.doodle.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import org.twinnation.doodle.R;
 
 /**
  * Created by chris on 2017-11-28.

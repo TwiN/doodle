@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Doodle</string>
     <string name="nothing_to_undo">Il n\'y a rien a annuler</string>
-    <string name="mode_set">Mode configuré: </string>
+    <string name="mode_set">Mode configuré</string>
     <string name="image_saved">Image sauvegardé</string>
     <string name="error">Erreur</string>
     <string name="change_file_name">Modifier le nom du fichier</string>
@@ -11,4 +11,7 @@
     <string name="maximum_brush_size">Grosseur maximale atteinte</string>
     <string name="minimum_brush_size">Grosseur minimale atteinte</string>
     <string name="set_file_name">Nom du fichier changer pour</string>
+    <string name="save">Sauvegarder</string>
+    <string name="draw">Dessiner</string>
+    <string name="quit">Quitter</string>
 </resources>

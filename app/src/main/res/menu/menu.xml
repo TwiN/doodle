@@ -4,15 +4,15 @@
     android:id="@+id/menu">
 
     <item
-        android:id="@+id/mode"
+        android:id="@+id/setColor"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="Modes"
+        android:title="@string/pick_color"
         app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/setFileName"
         android:title="@string/change_file_name" />
     <item
-        android:id="@+id/setColor"
-        android:title="@string/pick_color" />
+        android:id="@+id/mode"
+        android:title="Mode" />
 
 </menu>

@@ -1,18 +1,22 @@
-package org.twinnation.doodle;
+package org.twinnation.doodle.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import org.twinnation.doodle.R;
 import org.twinnation.doodle.util.FileUtils;
 
 import java.io.File;
@@ -26,21 +30,19 @@ public class CanvasView extends View {
     public static final int MAX_BRUSH_SIZE = 50;
     public static final int MIN_BRUSH_SIZE = 5;
 
-
     private Paint brush;
     private Paint background;
-    private Path path = new Path();
+    private Path path;
     private Canvas canvas;
+
+    private boolean isErasing;
+    private int currentColor;
+    private int currentSize;
+    private String customFileName;
+    private String mode;
 
     private List<Path> paths;
     private List<Paint> paints;
-
-    private String mode;
-    private boolean isErasing = false;
-
-    private int currentColor = Color.BLACK;
-    private int currentSize = 5;
-    private String customFileName;
 
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -51,6 +53,9 @@ public class CanvasView extends View {
         mode = "normal";
         paths = new ArrayList<>();
         paints = new ArrayList<>();
+        path = new Path();
+        currentColor = Color.BLACK;
+        currentSize = 5;
     }
 
 
@@ -97,11 +102,6 @@ public class CanvasView extends View {
     }
 
 
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-
     public void clearCanvas() {
         paths.clear();
         paints.clear();
@@ -119,18 +119,28 @@ public class CanvasView extends View {
             dir.mkdirs();
         }
         File file = new File(path + "/" + (customFileName == null ? FileUtils.generateFilename() : customFileName));
-        FileOutputStream ostream;
         try {
             file.createNewFile();
-            ostream = new FileOutputStream(file);
+            FileOutputStream ostream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
             ostream.flush();
             ostream.close();
-            Toast.makeText(getContext(), R.string.image_saved, Toast.LENGTH_SHORT).show();
+            MediaScannerConnection.scanFile(getContext(), new String[]{file.getPath()}, new String[]{"image/png"}, null);
+            showAlertDialog(getContext().getString(R.string.image_saved));
         } catch (Exception e) {
-            Toast.makeText(getContext(), R.string.error + e.getMessage(), Toast.LENGTH_SHORT).show();
+            showAlertDialog(getContext().getString(R.string.error) + ": "+e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    private void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        builder.create().show();
     }
 
 
@@ -142,11 +152,6 @@ public class CanvasView extends View {
         } else {
             Toast.makeText(getContext(), R.string.nothing_to_undo, Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    public String getMode() {
-        return mode;
     }
 
 
@@ -176,17 +181,6 @@ public class CanvasView extends View {
     }
 
 
-    public int getCurrentColor() {
-        return currentColor;
-    }
-
-
-    public void setCurrentColor(int currentColor) {
-        this.currentColor = currentColor;
-        initBrush();
-    }
-
-
     public void decrementBrushSize() {
         if (currentSize > MIN_BRUSH_SIZE) {
             currentSize -= 5;
@@ -204,7 +198,6 @@ public class CanvasView extends View {
         } else {
             Toast.makeText(getContext(), R.string.maximum_brush_size, Toast.LENGTH_SHORT).show();
         }
-
     }
 
 
@@ -218,6 +211,16 @@ public class CanvasView extends View {
     }
 
 
+    public String getMode() {
+        return mode;
+    }
+
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+
     public String getCustomFileName() {
         return customFileName;
     }
@@ -225,6 +228,17 @@ public class CanvasView extends View {
 
     public void setCustomFileName(String customFileName) {
         this.customFileName = customFileName;
+    }
+
+
+    public int getCurrentColor() {
+        return currentColor;
+    }
+
+
+    public void setCurrentColor(int currentColor) {
+        this.currentColor = currentColor;
+        initBrush();
     }
 
 }

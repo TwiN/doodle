@@ -1,4 +1,4 @@
-package org.twinnation.doodle;
+package org.twinnation.doodle.fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import org.twinnation.doodle.R;
 import org.twinnation.doodle.util.FileUtils;
 
 /**
@@ -33,9 +34,9 @@ public class FileNamePickerDialog extends DialogFragment {
         editText.setText(FileUtils.generateFilename());
 
         Dialog dialog = new AlertDialog.Builder(getActivity())
-                .setTitle("Set the file name")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.change_file_name)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         client.onFileNamePicked(editText.getText().toString());
