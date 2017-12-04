@@ -1,4 +1,4 @@
-package org.twinnation.doodle.fragment;
+package org.twinnation.doodle.view;
 
 import android.app.Fragment;
 import android.os.Bundle;

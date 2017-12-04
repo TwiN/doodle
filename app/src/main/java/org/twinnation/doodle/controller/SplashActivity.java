@@ -1,4 +1,4 @@
-package org.twinnation.doodle.activity;
+package org.twinnation.doodle.controller;
 
 import android.content.Intent;
 import android.os.Handler;

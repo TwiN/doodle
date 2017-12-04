@@ -1,4 +1,4 @@
-package org.twinnation.doodle.activity;
+package org.twinnation.doodle.controller;
 
 import android.Manifest;
 import android.support.v4.app.ActivityCompat;
@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.twinnation.doodle.R;
-import org.twinnation.doodle.fragment.BottomToolBarFragment;
-import org.twinnation.doodle.fragment.ColorPickerDialog;
-import org.twinnation.doodle.fragment.FileNamePickerDialog;
+import org.twinnation.doodle.view.BottomToolBarFragment;
+import org.twinnation.doodle.view.ColorPickerDialog;
+import org.twinnation.doodle.view.FileNamePickerDialog;
 import org.twinnation.doodle.view.CanvasView;
 
 

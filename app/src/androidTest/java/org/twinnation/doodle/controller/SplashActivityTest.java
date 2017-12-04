@@ -1,4 +1,4 @@
-package org.twinnation.doodle.activity;
+package org.twinnation.doodle.controller;
 
 
 import android.support.test.espresso.ViewInteraction;
@@ -41,9 +41,7 @@ public class SplashActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         assertThat("The current window should be DrawActivity", mActivityTestRule.getActivity().hasWindowFocus(), is(false));
-
     }
 
 }
