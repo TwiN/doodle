@@ -35,7 +35,7 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
 
         canvasView = (CanvasView)findViewById(R.id.canvas);
         canvasModel = new CanvasModel();
-
+        canvasView.setBrush(canvasModel.getBrush(), 0);
         bottomToolBarFragment = (BottomToolBarFragment)getFragmentManager().findFragmentById(R.id.bottomBar);
         initComponentsAndListeners();
     }
@@ -87,12 +87,9 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
 
     @Override
     public void onColorPicked(int color) {
-        canvasView.setCurrentColor(color);
+        canvasModel.setCurrentColor(color);
+        canvasView.setBrush(canvasModel.getBrush(), 0);
     }
-
-
-
-
 
 
     private void initComponentsAndListeners() {
@@ -120,18 +117,21 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         });
         plusSize.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                canvasView.incrementBrushSize();
+                int msg = canvasModel.incrementBrushSize();
+                canvasView.setBrush(canvasModel.getBrush(), msg);
             }
         });
         minusSize.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                canvasView.decrementBrushSize();
+                int msg = canvasModel.decrementBrushSize();
+                canvasView.setBrush(canvasModel.getBrush(), msg);
             }
         });
         eraserBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                canvasView.toggleEraserMode();
-                eraserBtn.setImageResource(canvasView.getIsErasing() ? R.mipmap.eraser_green : R.mipmap.eraser);
+                canvasModel.toggleEraserMode();
+                canvasView.setBrush(canvasModel.getBrush(), 0);
+                eraserBtn.setImageResource(canvasModel.isErasing() ? R.mipmap.eraser_green : R.mipmap.eraser);
             }
         });
     }

@@ -27,34 +27,32 @@ import java.util.List;
 
 public class CanvasView extends View {
 
-    public static final int MAX_BRUSH_SIZE = 50;
-    public static final int MIN_BRUSH_SIZE = 5;
+    private Paint currentPaint;
 
     private Paint brush;
+
+
+
     private Paint background;
     private Path path;
     private Canvas canvas;
 
-    private boolean isErasing;
-    private int currentColor;
-    private int currentSize;
     private String mode;
 
     private List<Path> paths;
     private List<Paint> paints;
 
 
+
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         background = new Paint();
         background.setColor(Color.WHITE);
-        initBrush();
         mode = "normal";
         paths = new ArrayList<>();
         paints = new ArrayList<>();
         path = new Path();
-        currentColor = Color.BLACK;
-        currentSize = 5;
+        brush = new Paint();
     }
 
 
@@ -90,8 +88,9 @@ public class CanvasView extends View {
                 }
                 paths.add(path);
                 paints.add(brush);
-                initBrush();
                 path = new Path();
+                // initBrush();
+                brush = new Paint(currentPaint);
                 break;
             default:
                 return false;
@@ -160,74 +159,12 @@ public class CanvasView extends View {
     }
 
 
-    public void toggleEraserMode() {
-        isErasing = !isErasing;
-        initBrush();
-    }
-
-
-    public void initBrush() {
-        brush = new Paint();
-        if (isErasing) {
-            brush.setColor(Color.WHITE);
-            brush.setStyle(Paint.Style.STROKE);
-            brush.setStrokeWidth(currentSize);
-        } else {
-            brush.setColor(currentColor);
-            brush.setStyle(Paint.Style.STROKE);
-            brush.setStrokeWidth(currentSize);
+    public void setBrush(Paint brush, int msg) {
+        this.currentPaint = new Paint(brush);
+        this.brush = currentPaint;
+        if (msg != 0) {
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    public void decrementBrushSize() {
-        if (currentSize > MIN_BRUSH_SIZE) {
-            currentSize -= 5;
-            initBrush();
-        } else {
-            Toast.makeText(getContext(), R.string.minimum_brush_size, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void incrementBrushSize() {
-        if (currentSize < MAX_BRUSH_SIZE) {
-            currentSize += 5;
-            initBrush();
-        } else {
-            Toast.makeText(getContext(), R.string.maximum_brush_size, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public boolean getIsErasing() {
-        return isErasing;
-    }
-
-
-    public int getCurrentSize() {
-        return currentSize;
-    }
-
-
-    public String getMode() {
-        return mode;
-    }
-
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-
-    public int getCurrentColor() {
-        return currentColor;
-    }
-
-
-    public void setCurrentColor(int currentColor) {
-        this.currentColor = currentColor;
-        initBrush();
     }
 
 }
