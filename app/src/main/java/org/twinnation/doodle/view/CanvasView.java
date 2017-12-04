@@ -38,7 +38,6 @@ public class CanvasView extends View {
     private boolean isErasing;
     private int currentColor;
     private int currentSize;
-    private String customFileName;
     private String mode;
 
     private List<Path> paths;
@@ -109,7 +108,7 @@ public class CanvasView extends View {
     }
 
 
-    public void saveDoodle() {
+    public void saveDoodle(String fileName) {
         setDrawingCacheEnabled(true);
         setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         Bitmap bitmap = getDrawingCache();
@@ -118,7 +117,7 @@ public class CanvasView extends View {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File file = new File(path + "/" + (customFileName == null ? FileUtils.generateFilename() : customFileName));
+        File file = new File(path + "/" + (fileName == null ? FileUtils.generateFilename() : fileName));
         try {
             file.createNewFile();
             FileOutputStream ostream = new FileOutputStream(file);
@@ -218,16 +217,6 @@ public class CanvasView extends View {
 
     public Canvas getCanvas() {
         return canvas;
-    }
-
-
-    public String getCustomFileName() {
-        return customFileName;
-    }
-
-
-    public void setCustomFileName(String customFileName) {
-        this.customFileName = customFileName;
     }
 
 
