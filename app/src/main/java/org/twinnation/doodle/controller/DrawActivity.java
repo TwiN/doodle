@@ -1,10 +1,12 @@
 package org.twinnation.doodle.controller;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -45,12 +47,6 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         canvasView.setBrush(canvasModel.getBrush(), 0);
         bottomToolBarFragment = (BottomToolBarFragment)getFragmentManager().findFragmentById(R.id.bottomBar);
         initComponentsAndListeners();
-    }
-
-
-    private void requestNeededPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 53523);
     }
 
 
@@ -99,6 +95,49 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
     }
 
 
+    //////////
+    // MISC //
+    //////////
+
+
+    private void requestNeededPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 53523);
+    }
+
+
+    public void showAlertDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        builder.create().show();
+    }
+
+
+    public void saveDoodle(Bitmap bitmap, String fileName) {
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(path + "/" + (fileName == null ? FileUtils.generateFilename() : fileName));
+        try {
+            file.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.flush();
+            ostream.close();
+            MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.getPath()}, new String[]{"image/png"}, null);
+            showAlertDialog(getApplicationContext().getString(R.string.image_saved));
+        } catch (Exception e) {
+            showAlertDialog(getApplicationContext().getString(R.string.error)+": "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
     private void initComponentsAndListeners() {
         final ImageButton clearCanvasBtn = bottomToolBarFragment.getView().findViewById(R.id.clearCanvas);
         final ImageButton saveCanvasBtn = bottomToolBarFragment.getView().findViewById(R.id.saveCanvas);
@@ -144,26 +183,10 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
     }
 
 
-    public void saveDoodle(Bitmap bitmap, String fileName) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(path + "/" + (fileName == null ? FileUtils.generateFilename() : fileName));
-        try {
-            file.createNewFile();
-            FileOutputStream ostream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-            ostream.flush();
-            ostream.close();
-            MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.getPath()}, new String[]{"image/png"}, null);
-            canvasView.showAlertDialog(getApplicationContext().getString(R.string.image_saved));
-        } catch (Exception e) {
-            canvasView.showAlertDialog(getApplicationContext().getString(R.string.error) + ": "+e.getMessage());
-            e.printStackTrace();
-        }
-    }
+    /////////////////////////
+    // GETTERS AND SETTERS //
+    /////////////////////////
+
 
     public CanvasView getCanvasView() {
         return canvasView;

@@ -1,14 +1,12 @@
 package org.twinnation.doodle.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,13 +21,9 @@ import java.util.List;
 public class CanvasView extends View {
 
     private Paint currentPaint;
-
     private Paint brush;
     private Paint background;
-
     private Path path;
-    private Canvas canvas;
-
     private String mode;
 
     private List<Path> paths;
@@ -38,14 +32,19 @@ public class CanvasView extends View {
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        background = new Paint();
-        background.setColor(Color.WHITE);
-        mode = "normal";
-        paths = new ArrayList<>();
-        paints = new ArrayList<>();
-        path = new Path();
-        brush = new Paint();
+        this.paths = new ArrayList<>();
+        this.paints = new ArrayList<>();
+        this.path = new Path();
+        this.brush = new Paint();
+        this.background = new Paint();
+        this.background.setColor(Color.WHITE);
+        this.mode = "normal";
     }
+
+
+    /////////////////////
+    // EVENT LISTENERS //
+    /////////////////////
 
 
     @Override
@@ -56,7 +55,6 @@ public class CanvasView extends View {
             canvas.drawPath(paths.get(i), paints.get(i));
         }
         canvas.drawPath(path, brush);
-        this.canvas = canvas;
     }
 
 
@@ -87,20 +85,15 @@ public class CanvasView extends View {
     }
 
 
+    //////////
+    // MISC //
+    //////////
+
+
     public void clearCanvas() {
         paths.clear();
         paints.clear();
         invalidate();
-    }
-
-
-    public void showAlertDialog(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialogInterface, int i) {}
-        });
-        builder.create().show();
     }
 
 
@@ -115,8 +108,13 @@ public class CanvasView extends View {
     }
 
 
+    /////////////////////////
+    // GETTERS AND SETTERS //
+    /////////////////////////
+
+
     /**
-     * Sets the brush and display a message, if available
+     * Sets the brush and display a message (if the msg string resource id isn't 0)
      */
     public void setBrush(Paint brush, int msg) {
         this.currentPaint = new Paint(brush);

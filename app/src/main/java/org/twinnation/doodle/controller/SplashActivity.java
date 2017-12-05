@@ -10,38 +10,25 @@ import android.widget.TextView;
 
 import org.twinnation.doodle.R;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     private Handler handler;
     private Runnable runnable;
 
-    private TextView drawTextBtn;
-    private TextView quitTextBtn;
-    private ImageView doodlepen;
+    private ImageView doodlePen;
+
+
+    /////////////////////
+    // EVENT LISTENERS //
+    /////////////////////
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        drawTextBtn = (TextView)findViewById(R.id.drawBtn);
-        quitTextBtn = (TextView)findViewById(R.id.quitBtn);
-        doodlepen = (ImageView)findViewById(R.id.doodlepen);
-
-        drawTextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                stopMovingPen();
-                startActivity(new Intent(SplashActivity.this, DrawActivity.class));
-            }
-        });
-
-        quitTextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                stopMovingPen();
-                SplashActivity.this.finish();
-                System.exit(0);
-            }
-        });
+        initComponentsAndListeners();
         startMovingPen();
     }
 
@@ -63,11 +50,37 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
+    //////////
+    // MISC //
+    //////////
+
+
+    private void initComponentsAndListeners() {
+        TextView drawBtn = (TextView)findViewById(R.id.drawBtn);
+        TextView quitBtn = (TextView)findViewById(R.id.quitBtn);
+        doodlePen = (ImageView)findViewById(R.id.doodlepen);
+
+        drawBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                stopMovingPen();
+                startActivity(new Intent(SplashActivity.this, DrawActivity.class));
+            }
+        });
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                stopMovingPen();
+                SplashActivity.this.finish();
+                System.exit(0);
+            }
+        });
+    }
+
+
     private void startMovingPen() {
         handler = new Handler();
         runnable = new Runnable() {
             public void run() {
-                doodlepen.setRotation(doodlepen.getRotation() == -25 ? -5 : -25);
+                doodlePen.setRotation(doodlePen.getRotation() == -25 ? -5 : -25);
                 handler.postDelayed(this, 200);
             }
         };

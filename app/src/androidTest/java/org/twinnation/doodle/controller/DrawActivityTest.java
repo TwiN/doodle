@@ -35,12 +35,10 @@ public class DrawActivityTest {
 
     @Test
     public void colorPickerTest() {
-        CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
         CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
 
         assertThat("By default, the brush color should be black.",
                 canvasModel.getCurrentColor(), is(Color.BLACK));
-
 
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.setColor), withContentDescription("Pick a color"), isDisplayed()));
@@ -57,7 +55,6 @@ public class DrawActivityTest {
 
     @Test
     public void maxBrushSizeTest() {
-        CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
         CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
 
         ViewInteraction appCompatButton = onView(allOf(withId(R.id.plusSize), withText("+"),
@@ -73,7 +70,6 @@ public class DrawActivityTest {
 
     @Test
     public void minBrushSizeTest() {
-        CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
         CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
 
         ViewInteraction appCompatButton = onView(allOf(withId(R.id.minusSize), withText("-"),

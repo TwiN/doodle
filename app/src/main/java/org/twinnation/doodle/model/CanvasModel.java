@@ -1,26 +1,20 @@
 package org.twinnation.doodle.model;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.MediaScannerConnection;
-import android.os.Environment;
 
 import org.twinnation.doodle.R;
-import org.twinnation.doodle.util.FileUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Created by chris on 2017-12-04.
  */
-
 public class CanvasModel {
 
-    public static final int MAX_BRUSH_SIZE = 50;
-    public static final int MIN_BRUSH_SIZE = 5;
+    public static final int DEFAULT_BRUSH_SIZE  = 15;
+    public static final int MAX_BRUSH_SIZE      = 50;
+    public static final int MIN_BRUSH_SIZE      = 5;
+    public static final int SIZE_STEP           = 5;
 
     private int currentSize;
     private int currentColor;
@@ -33,11 +27,15 @@ public class CanvasModel {
     private boolean isErasing;
 
 
-
     public CanvasModel() {
         currentColor = Color.BLACK;
-        currentSize = 15;
+        currentSize = DEFAULT_BRUSH_SIZE;
     }
+
+
+    //////////
+    // MISC //
+    //////////
 
 
     public void initBrush() {
@@ -54,17 +52,9 @@ public class CanvasModel {
     }
 
 
-    public Paint getBrush() {
-        if (brush == null) {
-            initBrush();
-        }
-        return brush;
-    }
-
-
     public int decrementBrushSize() {
         if (currentSize > MIN_BRUSH_SIZE) {
-            currentSize -= 5;
+            currentSize -= SIZE_STEP;
             initBrush();
         } else {
             return R.string.minimum_brush_size;
@@ -75,7 +65,7 @@ public class CanvasModel {
 
     public int incrementBrushSize() {
         if (currentSize < MAX_BRUSH_SIZE) {
-            currentSize += 5;
+            currentSize += SIZE_STEP;
             initBrush();
         } else {
             return R.string.maximum_brush_size;
@@ -90,6 +80,30 @@ public class CanvasModel {
     }
 
 
+    public void toggleEraserMode() {
+        isErasing = !isErasing;
+        initBrush();
+    }
+
+
+    /////////////////////////
+    // GETTERS AND SETTERS //
+    /////////////////////////
+
+
+    public Paint getBrush() {
+        if (brush == null) {
+            initBrush();
+        }
+        return brush;
+    }
+
+
+    public boolean isErasing() {
+        return isErasing;
+    }
+
+
     public String getCustomFileName() {
         return customFileName;
     }
@@ -100,32 +114,24 @@ public class CanvasModel {
     }
 
 
-    public void setCurrentColor(int currentColor) {
-        this.currentColor = currentColor;
-        initBrush();
-    }
-
-
-    public void toggleEraserMode() {
-        isErasing = !isErasing;
-        initBrush();
-    }
-
-
-    public boolean isErasing() {
-        return isErasing;
-    }
-
-
     public String getMode() {
         return mode;
     }
+
 
     public int getCurrentSize() {
         return currentSize;
     }
 
+
     public int getCurrentColor() {
         return currentColor;
     }
+
+
+    public void setCurrentColor(int currentColor) {
+        this.currentColor = currentColor;
+        initBrush();
+    }
+
 }
