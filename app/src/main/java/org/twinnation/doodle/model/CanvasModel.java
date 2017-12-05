@@ -1,10 +1,17 @@
 package org.twinnation.doodle.model;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.widget.Toast;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
 
 import org.twinnation.doodle.R;
+import org.twinnation.doodle.util.FileUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by chris on 2017-12-04.

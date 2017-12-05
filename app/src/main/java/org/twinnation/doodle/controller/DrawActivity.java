@@ -119,7 +119,7 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         });
         saveCanvasBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                canvasView.saveDoodle(canvasModel.getCustomFileName());
+                saveDoodle(canvasView.getBitmap(), canvasModel.getCustomFileName());
             }
         });
         plusSize.setOnClickListener(new View.OnClickListener() {
@@ -144,10 +144,7 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
     }
 
 
-    public void saveDoodle(String fileName) {
-        canvasView.setDrawingCacheEnabled(true);
-        canvasView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        Bitmap bitmap = canvasView.getDrawingCache();
+    public void saveDoodle(Bitmap bitmap, String fileName) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
         File dir = new File(path);
         if (!dir.exists()) {

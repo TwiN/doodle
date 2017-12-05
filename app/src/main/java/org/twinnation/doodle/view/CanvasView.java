@@ -7,8 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.media.MediaScannerConnection;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
@@ -17,10 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.twinnation.doodle.R;
-import org.twinnation.doodle.util.FileUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +34,6 @@ public class CanvasView extends View {
 
     private List<Path> paths;
     private List<Paint> paints;
-
 
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -69,16 +63,12 @@ public class CanvasView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
-
-        float x = event.getX();
-        float y = event.getY();
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                path.moveTo(x, y);
+                path.moveTo(event.getX(), event.getY());
                 break;
             case MotionEvent.ACTION_MOVE:
-                path.lineTo(x, y);
+                path.lineTo(event.getX(), event.getY());
                 break;
             case MotionEvent.ACTION_UP:
                 if (mode.equals("arc")) {
@@ -101,31 +91,6 @@ public class CanvasView extends View {
         paths.clear();
         paints.clear();
         invalidate();
-    }
-
-
-    public void saveDoodle(String fileName) {
-        setDrawingCacheEnabled(true);
-        setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        Bitmap bitmap = getDrawingCache();
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(path + "/" + (fileName == null ? FileUtils.generateFilename() : fileName));
-        try {
-            file.createNewFile();
-            FileOutputStream ostream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-            ostream.flush();
-            ostream.close();
-            MediaScannerConnection.scanFile(getContext(), new String[]{file.getPath()}, new String[]{"image/png"}, null);
-            showAlertDialog(getContext().getString(R.string.image_saved));
-        } catch (Exception e) {
-            showAlertDialog(getContext().getString(R.string.error) + ": "+e.getMessage());
-            e.printStackTrace();
-        }
     }
 
 
@@ -165,6 +130,13 @@ public class CanvasView extends View {
     public void setMode(String mode) {
         this.mode = mode;
         Toast.makeText(getContext(), getContext().getString(R.string.mode_set) + ": " + mode, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public Bitmap getBitmap() {
+        setDrawingCacheEnabled(true);
+        setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        return getDrawingCache();
     }
 
 }
