@@ -12,9 +12,7 @@ import android.widget.EditText;
 import org.twinnation.doodle.R;
 import org.twinnation.doodle.util.FileUtils;
 
-/**
- * Created by chris on 2017-11-28.
- */
+
 public class FileNamePickerDialog extends DialogFragment {
 
     private IFileNamePicker client;
@@ -31,7 +29,7 @@ public class FileNamePickerDialog extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.file_name_picker, null);
 
         final EditText editText = view.findViewById(R.id.fileName);
-        editText.setText(FileUtils.generateFilename());
+        editText.setText(FileUtils.generateFileName());
 
         Dialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.change_file_name)

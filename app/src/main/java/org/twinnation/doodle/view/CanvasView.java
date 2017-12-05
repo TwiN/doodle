@@ -30,6 +30,9 @@ public class CanvasView extends View {
     private List<Paint> paints;
 
 
+    /**
+     * Constructor
+     */
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.paths = new ArrayList<>();
@@ -89,7 +92,9 @@ public class CanvasView extends View {
     // MISC //
     //////////
 
-
+    /**
+     * Clears the canvas
+     */
     public void clearCanvas() {
         paths.clear();
         paints.clear();
@@ -97,6 +102,9 @@ public class CanvasView extends View {
     }
 
 
+    /**
+     * Removes the last the
+     */
     public void undo() {
         if (paths.size() > 0) {
             paths.remove(paths.size()-1);
@@ -125,12 +133,19 @@ public class CanvasView extends View {
     }
 
 
+    /**
+     * Sets the mode
+     * @param mode
+     */
     public void setMode(String mode) {
         this.mode = mode;
         Toast.makeText(getContext(), getContext().getString(R.string.mode_set) + ": " + mode, Toast.LENGTH_SHORT).show();
     }
 
 
+    /**
+     * Gets the bitmap
+     */
     public Bitmap getBitmap() {
         setDrawingCacheEnabled(true);
         setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);

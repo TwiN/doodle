@@ -12,7 +12,7 @@ public class FileUtilsTest {
 
     @Test
     public void generateFilename() throws Exception {
-        assertTrue(FileUtils.generateFilename().startsWith("doodle_"));
+        assertTrue(FileUtils.generateFileName().startsWith("doodle_"));
     }
 
 }

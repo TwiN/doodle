@@ -10,9 +10,7 @@ import android.view.View;
 
 import org.twinnation.doodle.R;
 
-/**
- * Created by chris on 2017-11-28.
- */
+
 public class ColorPickerDialog extends DialogFragment {
 
     private IColorPicker client;

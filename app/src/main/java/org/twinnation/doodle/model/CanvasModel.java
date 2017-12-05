@@ -6,9 +6,6 @@ import android.graphics.Paint;
 import org.twinnation.doodle.R;
 
 
-/**
- * Created by chris on 2017-12-04.
- */
 public class CanvasModel {
 
     public static final int DEFAULT_BRUSH_SIZE  = 15;
@@ -30,6 +27,9 @@ public class CanvasModel {
     private boolean isErasing;
 
 
+    /**
+     * Constructor
+     */
     public CanvasModel() {
         currentColor = Color.BLACK;
         currentSize = DEFAULT_BRUSH_SIZE;
@@ -42,7 +42,10 @@ public class CanvasModel {
     //////////
 
 
-    public void initBrush() {
+    /**
+     * Initializes the brush
+     */
+    private void initBrush() {
         brush = new Paint();
         if (isErasing) {
             brush.setColor(Color.WHITE);
@@ -56,28 +59,40 @@ public class CanvasModel {
     }
 
 
-    public int decrementBrushSize() {
+    /**
+     * Decrement the size of the brush
+     * @return Whether the brush size decreased
+     */
+    public boolean decrementBrushSize() {
         if (currentSize > MIN_BRUSH_SIZE) {
             currentSize -= SIZE_STEP;
             initBrush();
         } else {
-            return R.string.minimum_brush_size;
+            return false;
         }
-        return 0;
+        return true;
     }
 
 
-    public int incrementBrushSize() {
+    /**
+     * Increment the size of the brush
+     * @return Whether the brush size incremented
+     */
+    public boolean incrementBrushSize() {
         if (currentSize < MAX_BRUSH_SIZE) {
             currentSize += SIZE_STEP;
             initBrush();
         } else {
-            return R.string.maximum_brush_size;
+            return false;
         }
-        return 0;
+        return true;
     }
 
 
+    /**
+     * Cycles to the next mode
+     * @return The new mode
+     */
     public String cycleNextMode() {
         this.mode = mode.equals(MODE_ARC) ? MODE_NORMAL : MODE_ARC;
         return mode;

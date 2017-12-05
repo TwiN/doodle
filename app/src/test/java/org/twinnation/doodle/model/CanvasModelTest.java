@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertFalse;
 
 
 public class CanvasModelTest {
@@ -42,9 +42,8 @@ public class CanvasModelTest {
         while (x --> 0) {
             canvasModel.incrementBrushSize();
         }
-        int messageOutput = canvasModel.incrementBrushSize();
-        assertNotEquals("A non-null R.string.id should be returned because the max size has been reached",
-                0, messageOutput);
+        assertFalse("The brush size has reached the maximum and should not be able to increase more",
+                canvasModel.incrementBrushSize());
 
         assertEquals("The current brush size cannot be above the maximum brush size.",
                 CanvasModel.MAX_BRUSH_SIZE, canvasModel.getCurrentSize());
@@ -61,9 +60,8 @@ public class CanvasModelTest {
         while (x --> 0) {
             canvasModel.decrementBrushSize();
         }
-        int messageOutput = canvasModel.decrementBrushSize();
-        assertNotEquals("A non-null R.string.id should be returned because the min size has been reached",
-                0, messageOutput);
+        assertFalse("The brush size has reached the minimum and should not be able to decrease more",
+                canvasModel.decrementBrushSize());
 
         assertEquals("The current brush size cannot be under the minimum brush size.",
                 CanvasModel.MIN_BRUSH_SIZE, canvasModel.getCurrentSize());

@@ -10,8 +10,10 @@ public class FileUtils {
 
     private FileUtils() {}
 
-
-    public static String generateFilename() {
+    /**
+     * Generates a file name
+     */
+    public static String generateFileName() {
         return "doodle_"+new SimpleDateFormat("yyyy-MM-dd_HHmmss").format(new Date())+".png";
     }
 

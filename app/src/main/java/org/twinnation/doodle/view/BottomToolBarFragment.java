@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 
 import org.twinnation.doodle.R;
 
-/**
- * Created by chris on 2017-11-24.
- */
+
 public class BottomToolBarFragment extends Fragment {
 
     @Nullable
