@@ -16,6 +16,9 @@ public class CanvasModel {
     public static final int MIN_BRUSH_SIZE      = 5;
     public static final int SIZE_STEP           = 5;
 
+    public static final String MODE_NORMAL      = "normal";
+    public static final String MODE_ARC         = "arc";
+
     private int currentSize;
     private int currentColor;
 
@@ -30,6 +33,7 @@ public class CanvasModel {
     public CanvasModel() {
         currentColor = Color.BLACK;
         currentSize = DEFAULT_BRUSH_SIZE;
+        this.mode = MODE_NORMAL;
     }
 
 
@@ -75,7 +79,7 @@ public class CanvasModel {
 
 
     public String cycleNextMode() {
-        this.mode = mode.equals("arc") ? "normal" : "arc";
+        this.mode = mode.equals(MODE_ARC) ? MODE_NORMAL : MODE_ARC;
         return mode;
     }
 
