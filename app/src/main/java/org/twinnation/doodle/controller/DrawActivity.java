@@ -2,6 +2,7 @@ package org.twinnation.doodle.controller;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
@@ -9,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +28,7 @@ import org.twinnation.doodle.view.CanvasView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 
 /**
@@ -54,6 +57,8 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         canvasView.setBrush(canvasModel.getBrush(), 0);
         bottomToolBarFragment = (BottomToolBarFragment)getFragmentManager().findFragmentById(R.id.bottomBar);
         initComponentsAndListeners();
+        Log.i("DrawActivity", "Started DrawActivity on "
+                + new Date(getIntent().getExtras().getLong("date_drawing_start")).toString());
     }
 
 

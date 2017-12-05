@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.twinnation.doodle.R;
+import org.twinnation.doodle.view.CanvasView;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -63,7 +64,9 @@ public class SplashActivity extends AppCompatActivity {
         drawBtn.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 stopMovingPen();
-                startActivity(new Intent(SplashActivity.this, DrawActivity.class));
+                Intent intent = new Intent(SplashActivity.this, DrawActivity.class);
+                intent.putExtra("date_drawing_start", System.currentTimeMillis());
+                startActivity(intent);
             }
         });
         quitBtn.setOnClickListener(new View.OnClickListener() {
