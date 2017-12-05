@@ -16,10 +16,15 @@ public class CanvasModel {
     public static final int MIN_BRUSH_SIZE = 5;
 
     private int currentSize;
-    private String customFileName;
-    private Paint brush;
-    private boolean isErasing;
     private int currentColor;
+
+    private String customFileName;
+    private String mode;
+
+    private Paint brush;
+
+    private boolean isErasing;
+
 
 
     public CanvasModel() {
@@ -72,6 +77,12 @@ public class CanvasModel {
     }
 
 
+    public String cycleNextMode() {
+        this.mode = mode.equals("arc") ? "normal" : "arc";
+        return mode;
+    }
+
+
     public String getCustomFileName() {
         return customFileName;
     }
@@ -98,4 +109,16 @@ public class CanvasModel {
         return isErasing;
     }
 
+
+    public String getMode() {
+        return mode;
+    }
+
+    public int getCurrentSize() {
+        return currentSize;
+    }
+
+    public int getCurrentColor() {
+        return currentColor;
+    }
 }

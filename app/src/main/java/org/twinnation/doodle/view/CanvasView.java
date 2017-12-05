@@ -30,10 +30,8 @@ public class CanvasView extends View {
     private Paint currentPaint;
 
     private Paint brush;
-
-
-
     private Paint background;
+
     private Path path;
     private Canvas canvas;
 
@@ -89,7 +87,6 @@ public class CanvasView extends View {
                 paths.add(path);
                 paints.add(brush);
                 path = new Path();
-                // initBrush();
                 brush = new Paint(currentPaint);
                 break;
             default:
@@ -132,7 +129,7 @@ public class CanvasView extends View {
     }
 
 
-    private void showAlertDialog(String message) {
+    public void showAlertDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(message);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -153,18 +150,21 @@ public class CanvasView extends View {
     }
 
 
-    public String cycleNextMode() {
-        mode = mode.equals("arc") ? "normal" : "arc";
-        return mode;
-    }
-
-
+    /**
+     * Sets the brush and display a message, if available
+     */
     public void setBrush(Paint brush, int msg) {
         this.currentPaint = new Paint(brush);
         this.brush = currentPaint;
         if (msg != 0) {
             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    public void setMode(String mode) {
+        this.mode = mode;
+        Toast.makeText(getContext(), getContext().getString(R.string.mode_set) + ": " + mode, Toast.LENGTH_SHORT).show();
     }
 
 }

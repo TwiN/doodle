@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.twinnation.doodle.R;
+import org.twinnation.doodle.model.CanvasModel;
 import org.twinnation.doodle.view.CanvasView;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -35,8 +36,10 @@ public class DrawActivityTest {
     @Test
     public void colorPickerTest() {
         CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
+        CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
+
         assertThat("By default, the brush color should be black.",
-                canvasView.getCurrentColor(), is(Color.BLACK));
+                canvasModel.getCurrentColor(), is(Color.BLACK));
 
 
         ViewInteraction actionMenuItemView = onView(
@@ -48,35 +51,39 @@ public class DrawActivityTest {
         appCompatImageView.perform(click());
 
         assertThat("After picking the color green, the color of the brush should be green",
-                canvasView.getCurrentColor(), is(Color.GREEN));
+                canvasModel.getCurrentColor(), is(Color.GREEN));
     }
 
 
     @Test
     public void maxBrushSizeTest() {
         CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
+        CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
+
         ViewInteraction appCompatButton = onView(allOf(withId(R.id.plusSize), withText("+"),
                 withParent(withId(R.id.bottomBar)), isDisplayed()));
         int x = 15;
         while (x --> 0) {
             appCompatButton.perform(click());
         }
-        assertThat("The maximum brush size should be " + CanvasView.MAX_BRUSH_SIZE,
-                canvasView.getCurrentSize(), is(CanvasView.MAX_BRUSH_SIZE));
+        assertThat("The maximum brush size should be " + CanvasModel.MAX_BRUSH_SIZE,
+                canvasModel.getCurrentSize(), is(CanvasModel.MAX_BRUSH_SIZE));
     }
 
 
     @Test
     public void minBrushSizeTest() {
         CanvasView canvasView = mActivityTestRule.getActivity().getCanvasView();
+        CanvasModel canvasModel = mActivityTestRule.getActivity().getCanvasModel();
+
         ViewInteraction appCompatButton = onView(allOf(withId(R.id.minusSize), withText("-"),
                 withParent(withId(R.id.bottomBar)), isDisplayed()));
         int x = 15;
         while (x --> 0) {
             appCompatButton.perform(click());
         }
-        assertThat("The maximum brush size should be " + CanvasView.MIN_BRUSH_SIZE,
-                canvasView.getCurrentSize(), is(CanvasView.MIN_BRUSH_SIZE));
+        assertThat("The maximum brush size should be " + CanvasModel.MIN_BRUSH_SIZE,
+                canvasModel.getCurrentSize(), is(CanvasModel.MIN_BRUSH_SIZE));
     }
 
 }

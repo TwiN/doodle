@@ -1,6 +1,9 @@
 package org.twinnation.doodle.controller;
 
 import android.Manifest;
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +16,14 @@ import android.widget.Toast;
 
 import org.twinnation.doodle.R;
 import org.twinnation.doodle.model.CanvasModel;
+import org.twinnation.doodle.util.FileUtils;
 import org.twinnation.doodle.view.BottomToolBarFragment;
 import org.twinnation.doodle.view.ColorPickerDialog;
 import org.twinnation.doodle.view.FileNamePickerDialog;
 import org.twinnation.doodle.view.CanvasView;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 
 public class DrawActivity extends AppCompatActivity implements FileNamePickerDialog.IFileNamePicker, ColorPickerDialog.IColorPicker {
@@ -59,8 +66,8 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.mode:
-                Toast.makeText(this, getApplicationContext().getString(R.string.mode_set) + ": "
-                        + canvasView.cycleNextMode(), Toast.LENGTH_SHORT).show();
+                canvasModel.cycleNextMode();
+                canvasView.setMode(canvasModel.getMode());
                 break;
             case R.id.setFileName:
                 FileNamePickerDialog fileNamePickerDialog = new FileNamePickerDialog();
@@ -134,6 +141,40 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
                 eraserBtn.setImageResource(canvasModel.isErasing() ? R.mipmap.eraser_green : R.mipmap.eraser);
             }
         });
+    }
+
+
+    public void saveDoodle(String fileName) {
+        canvasView.setDrawingCacheEnabled(true);
+        canvasView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        Bitmap bitmap = canvasView.getDrawingCache();
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Doodle";
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(path + "/" + (fileName == null ? FileUtils.generateFilename() : fileName));
+        try {
+            file.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+            ostream.flush();
+            ostream.close();
+            MediaScannerConnection.scanFile(getApplicationContext(), new String[]{file.getPath()}, new String[]{"image/png"}, null);
+            canvasView.showAlertDialog(getApplicationContext().getString(R.string.image_saved));
+        } catch (Exception e) {
+            canvasView.showAlertDialog(getApplicationContext().getString(R.string.error) + ": "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public CanvasView getCanvasView() {
+        return canvasView;
+    }
+
+
+    public CanvasModel getCanvasModel() {
+        return canvasModel;
     }
 
 }
