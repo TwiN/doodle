@@ -3,8 +3,6 @@ package org.twinnation.doodle.model;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import org.twinnation.doodle.R;
-
 
 public class CanvasModel {
 

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.twinnation.doodle.R;
-import org.twinnation.doodle.view.CanvasView;
 
 
 public class SplashActivity extends AppCompatActivity {
