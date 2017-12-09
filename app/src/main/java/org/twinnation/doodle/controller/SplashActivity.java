@@ -54,8 +54,8 @@ public class SplashActivity extends AppCompatActivity {
 
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    protected void onStop() {
+        super.onStop();
         isSoundOn = prefs.getBoolean("isSoundOn", false);
         if (isSoundOn) {
             if (mp == null) {
@@ -63,14 +63,25 @@ public class SplashActivity extends AppCompatActivity {
                 mp.setLooping(true);
                 mp.seekTo(prefs.getInt("music_time", 0));
             }
-            if (hasFocus) {
-                mp.start();
-            } else {
-                prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
-                mp.stop();
-                mp.release();
-                mp = null;
+            prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isSoundOn = prefs.getBoolean("isSoundOn", false);
+        if (isSoundOn) {
+            if (mp == null) {
+                mp = MediaPlayer.create(this, R.raw.background_music);
+                mp.setLooping(true);
+                mp.seekTo(prefs.getInt("music_time", 0));
             }
+            mp.start();
         }
     }
 
@@ -94,6 +105,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override public void onClick(View view) {
                 stopMovingPen();
                 prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
+                mp.setVolume(0.1f, 0.1f);
                 Intent intent = new Intent(SplashActivity.this, DrawActivity.class);
                 startActivity(intent);
             }

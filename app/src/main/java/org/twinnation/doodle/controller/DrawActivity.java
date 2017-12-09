@@ -63,22 +63,32 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
 
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
+    protected void onStop() {
+        super.onStop();
         if (prefs.getBoolean("isSoundOn", false)) {
             if (mp == null) {
                 mp = MediaPlayer.create(this, R.raw.background_music);
                 mp.setLooping(true);
                 mp.seekTo(prefs.getInt("music_time", 0));
             }
-            if (hasFocus) {
-                mp.start();
-            } else {
-                prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
-                mp.stop();
-                mp.release();
-                mp = null;
+            prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (prefs.getBoolean("isSoundOn", false)) {
+            if (mp == null) {
+                mp = MediaPlayer.create(this, R.raw.background_music);
+                mp.setLooping(true);
+                mp.seekTo(prefs.getInt("music_time", 0));
             }
+            mp.start();
         }
     }
 
@@ -87,6 +97,7 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
     public void onBackPressed() {
         super.onBackPressed();
         prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
+        mp.setVolume(0.1f, 0.1f);
     }
 
 
@@ -160,7 +171,6 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         });
         builder.create().show();
     }
-
 
 
     /**
