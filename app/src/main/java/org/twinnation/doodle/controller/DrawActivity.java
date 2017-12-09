@@ -2,14 +2,15 @@ package org.twinnation.doodle.controller;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,6 @@ import org.twinnation.doodle.view.CanvasView;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
 
 
 /**
@@ -39,7 +39,9 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
     private CanvasModel canvasModel;
 
     private BottomToolBarFragment bottomToolBarFragment;
+    private MediaPlayer mp;
 
+    private SharedPreferences prefs;
 
     /////////////////////
     // EVENT LISTENERS //
@@ -55,12 +57,36 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         canvasModel = new CanvasModel();
         canvasView.setBrush(canvasModel.getBrush(), 0);
         bottomToolBarFragment = (BottomToolBarFragment)getFragmentManager().findFragmentById(R.id.bottomBar);
+        prefs = getApplicationContext().getSharedPreferences("CONFIG", 0);
         initComponentsAndListeners();
+    }
 
-        if (getIntent().getExtras() != null) {
-            Log.i("DrawActivity", "Started DrawActivity on "
-                    + new Date(getIntent().getExtras().getLong("date_drawing_start")).toString());
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (prefs.getBoolean("isSoundOn", false)) {
+            if (mp == null) {
+                mp = MediaPlayer.create(this, R.raw.background_music);
+                mp.setLooping(true);
+                mp.seekTo(prefs.getInt("music_time", 0));
+            }
+            if (hasFocus) {
+                mp.start();
+            } else {
+                prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
+                mp.stop();
+                mp.release();
+                mp = null;
+            }
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        prefs.edit().putInt("music_time", mp.getCurrentPosition()).apply();
     }
 
 
@@ -134,6 +160,7 @@ public class DrawActivity extends AppCompatActivity implements FileNamePickerDia
         });
         builder.create().show();
     }
+
 
 
     /**
